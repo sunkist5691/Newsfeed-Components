@@ -1,6 +1,7 @@
 // This is the data we will be using to create our articles. Look at it, then proceed to line 93.
 // OPTIONAL: if you're feeling adventurous, try to make this data an export from a different module, and import it here.
 // You can read about ES6 modules here: https://exploringjs.com/es6/ch_modules.html#sec_basics-of-es6-modules
+
 const data = [
   {
     title: 'Lambda School Students: "We\'re the best!"',
@@ -94,23 +95,92 @@ const data = [
   Your component is a function that takes an article object as its only argument,
   and returns a DOM node looking like the one below:
 
-  <div class="article">
-    <h2>{title of the article}</h2>
-    <p class="date">{date of the article}</p>
+                  <div class="article">
+                    <h2>{title of the article}</h2>
+                    <p class="date">{date of the article}</p>
 
-    {three separate paragraph elements}
+                    {three separate paragraph elements}
 
-    <span class="expandButton">+</span>
-  </div>
+                    <span class="expandButton">+</span>
+                  </div>
+
 
   Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   This listener should toggle the class 'article-open' on div.article.
 
-  Step 3: Don't forget to return something from your function!
+  Step 3: Don't forget to return something from your function
 
   Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
   to create a div.article element and append it to the DOM inside div.articles (see index.html).
 
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
+
 */
+
+function articleMaker(obj){
+
+  // Create elements
+  const article = document.createElement('div')
+  const articleTitle = document.createElement('h2')
+  const articleDate = document.createElement('p')
+  const p1 = document.createElement('p')
+  const p2 = document.createElement('p')
+  const p3 = document.createElement('p')
+  const exbtn = document.createElement('span')
+
+  // Add class name
+  article.classList.add('article')
+  articleDate.classList.add('date')
+  exbtn.classList.add('expandButton')
+
+  // Append elements to class 'article' element
+  article.appendChild(articleTitle)
+  article.appendChild(articleDate)
+  article.appendChild(p1)
+  article.appendChild(p2)
+  article.appendChild(p3)
+  article.appendChild(exbtn)
+
+  // Add text content
+  articleTitle.textContent = obj.title
+  articleDate.textContent = obj.date
+  p1.textContent = obj.firstParagraph
+  p2.textContent = obj.secondParagraph
+  p3.textContent = obj.thirdParagraph
+  exbtn.textContent = '+'
+
+  // Add eventListener to button
+  exbtn.addEventListener('click', () => {
+    article.classList.toggle('article-open')
+  })
+
+  return article
+
+}
+
+// Adding new article (ORDER MATTERS)
+const newArticle = {
+
+  title: 'The best School in the world',
+  date: 'September 2th 2020',
+  firstParagraph: `BESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBESTBEST`,
+
+  secondParagraph: `ISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISISIS`,
+
+  thirdParagraph: `LAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDALAMBDA`
+
+}
+
+data.push(newArticle)
+
+
+// Create and append from each data
+const articles = document.querySelector('.articles')
+
+data.forEach( eachData => {
+  
+  const addData = articleMaker(eachData)
+  articles.appendChild(addData)
+
+})
