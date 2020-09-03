@@ -118,7 +118,7 @@ const data = [
 
 */
 
-function articleMaker(obj){
+function ArticleMaker(obj){
 
   // Create elements
   const article = document.createElement('div')
@@ -180,7 +180,7 @@ const articles = document.querySelector('.articles')
 
 data.forEach( eachData => {
   
-  const addData = articleMaker(eachData)
+  const addData = ArticleMaker(eachData)
   articles.appendChild(addData)
 
 })
